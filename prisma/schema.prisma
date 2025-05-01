@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Invoice {
+  id                  String   @id @default(cuid())
+  slipId              String   @unique
+  orderDate           String
+  material            String
+  crusherName         String
+  crusherAddress      String
+  crusherGst          String
+  consigneeName       String
+  consigneeCategory   String
+  consigneeMobile     String
+  consigneeGst        String?
+  destinationLocation String
+  vehicleNo           String
+  vehicleOwnerName    String
+  driverName          String
+  driverMobile        String
+  unladenWeight       Float
+  loadingWeight       Float
+  materialWeight      String
+  materialAmount      Float
+  gstAmount           Float
+  validityDateTime    String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([slipId])
+}
