@@ -32,7 +32,8 @@ const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to save invoice data');
+                const errorData = await response.text();
+                throw new Error(`Failed to save invoice data: ${errorData}`);
             }
 
             // Generate PDF
@@ -48,6 +49,7 @@ const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
             pdf.save(`Invoice-${data.slipId}.pdf`);
         } catch (error) {
             console.error('Error generating invoice:', error);
+            alert(error instanceof Error ? error.message : 'Failed to generate invoice');
         } finally {
             setIsLoading(false);
         }
@@ -74,9 +76,9 @@ const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
                             <h2 className="text-xl font-semibold text-center mt-2">Form 'Q'</h2>
                             <h3 className="text-lg font-semibold text-center mt-1">Crusher Weighment Slip</h3>
                         </div>
-                        <a 
-                            href="https://minesandgeology.punjab.gov.i/stone/index.php?orders&task=detils&Cid=9&i" 
-                            target="_blank" 
+                        <a
+                            href="https://minesandgeology.punjab.gov.i/stone/index.php?orders&task=detils&Cid=9&i"
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="text-xs text-gray-500 hover:text-gray-700 absolute right-0"
                         >
@@ -88,9 +90,7 @@ const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
                             <p><span className="font-semibold">No/Slip ID:</span> {data.slipId}</p>
                             <p><span className="font-semibold">Order Date:</span> {data.orderDate}</p>
                         </div>
-                        <div>
-                            <p><span className="font-semibold">Material:</span> {data.material}</p>
-                        </div>
+
                     </div>
                 </div>
 
@@ -109,6 +109,10 @@ const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
                         <p><span className="font-semibold">Mobile:</span> {data.consigneeMobile}</p>
                         {data.consigneeGst && <p><span className="font-semibold">GST No:</span> {data.consigneeGst}</p>}
                         <p><span className="font-semibold">Destination:</span> {data.destinationLocation}</p>
+                    </div>
+
+                    <div>
+                        <p><span className="font-semibold">Material:</span> {data.material}</p>
                     </div>
                 </div>
 

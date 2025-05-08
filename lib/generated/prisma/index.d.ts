@@ -885,7 +885,7 @@ export namespace Prisma {
     unladenWeight: number | null
     loadingWeight: number | null
     materialWeightMT: number | null
-    materialWeightCMT: number | null
+    materialWeightCFT: number | null
     materialAmount: number | null
     gstAmount: number | null
   }
@@ -894,7 +894,7 @@ export namespace Prisma {
     unladenWeight: number | null
     loadingWeight: number | null
     materialWeightMT: number | null
-    materialWeightCMT: number | null
+    materialWeightCFT: number | null
     materialAmount: number | null
     gstAmount: number | null
   }
@@ -919,7 +919,7 @@ export namespace Prisma {
     unladenWeight: number | null
     loadingWeight: number | null
     materialWeightMT: number | null
-    materialWeightCMT: number | null
+    materialWeightCFT: number | null
     materialAmount: number | null
     gstAmount: number | null
     validityDateTime: string | null
@@ -947,7 +947,7 @@ export namespace Prisma {
     unladenWeight: number | null
     loadingWeight: number | null
     materialWeightMT: number | null
-    materialWeightCMT: number | null
+    materialWeightCFT: number | null
     materialAmount: number | null
     gstAmount: number | null
     validityDateTime: string | null
@@ -975,7 +975,7 @@ export namespace Prisma {
     unladenWeight: number
     loadingWeight: number
     materialWeightMT: number
-    materialWeightCMT: number
+    materialWeightCFT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: number
@@ -989,7 +989,7 @@ export namespace Prisma {
     unladenWeight?: true
     loadingWeight?: true
     materialWeightMT?: true
-    materialWeightCMT?: true
+    materialWeightCFT?: true
     materialAmount?: true
     gstAmount?: true
   }
@@ -998,7 +998,7 @@ export namespace Prisma {
     unladenWeight?: true
     loadingWeight?: true
     materialWeightMT?: true
-    materialWeightCMT?: true
+    materialWeightCFT?: true
     materialAmount?: true
     gstAmount?: true
   }
@@ -1023,7 +1023,7 @@ export namespace Prisma {
     unladenWeight?: true
     loadingWeight?: true
     materialWeightMT?: true
-    materialWeightCMT?: true
+    materialWeightCFT?: true
     materialAmount?: true
     gstAmount?: true
     validityDateTime?: true
@@ -1051,7 +1051,7 @@ export namespace Prisma {
     unladenWeight?: true
     loadingWeight?: true
     materialWeightMT?: true
-    materialWeightCMT?: true
+    materialWeightCFT?: true
     materialAmount?: true
     gstAmount?: true
     validityDateTime?: true
@@ -1079,7 +1079,7 @@ export namespace Prisma {
     unladenWeight?: true
     loadingWeight?: true
     materialWeightMT?: true
-    materialWeightCMT?: true
+    materialWeightCFT?: true
     materialAmount?: true
     gstAmount?: true
     validityDateTime?: true
@@ -1194,7 +1194,7 @@ export namespace Prisma {
     unladenWeight: number
     loadingWeight: number
     materialWeightMT: number
-    materialWeightCMT: number
+    materialWeightCFT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: string
@@ -1241,7 +1241,7 @@ export namespace Prisma {
     unladenWeight?: boolean
     loadingWeight?: boolean
     materialWeightMT?: boolean
-    materialWeightCMT?: boolean
+    materialWeightCFT?: boolean
     materialAmount?: boolean
     gstAmount?: boolean
     validityDateTime?: boolean
@@ -1269,7 +1269,7 @@ export namespace Prisma {
     unladenWeight?: boolean
     loadingWeight?: boolean
     materialWeightMT?: boolean
-    materialWeightCMT?: boolean
+    materialWeightCFT?: boolean
     materialAmount?: boolean
     gstAmount?: boolean
     validityDateTime?: boolean
@@ -1297,7 +1297,7 @@ export namespace Prisma {
     unladenWeight?: boolean
     loadingWeight?: boolean
     materialWeightMT?: boolean
-    materialWeightCMT?: boolean
+    materialWeightCFT?: boolean
     materialAmount?: boolean
     gstAmount?: boolean
     validityDateTime?: boolean
@@ -1325,7 +1325,7 @@ export namespace Prisma {
     unladenWeight?: boolean
     loadingWeight?: boolean
     materialWeightMT?: boolean
-    materialWeightCMT?: boolean
+    materialWeightCFT?: boolean
     materialAmount?: boolean
     gstAmount?: boolean
     validityDateTime?: boolean
@@ -1333,7 +1333,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type InvoiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slipId" | "orderDate" | "material" | "crusherName" | "crusherAddress" | "crusherGst" | "consigneeName" | "consigneeCategory" | "consigneeMobile" | "consigneeGst" | "destinationLocation" | "vehicleNo" | "vehicleOwnerName" | "driverName" | "driverMobile" | "unladenWeight" | "loadingWeight" | "materialWeightMT" | "materialWeightCMT" | "materialAmount" | "gstAmount" | "validityDateTime" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
+  export type InvoiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slipId" | "orderDate" | "material" | "crusherName" | "crusherAddress" | "crusherGst" | "consigneeName" | "consigneeCategory" | "consigneeMobile" | "consigneeGst" | "destinationLocation" | "vehicleNo" | "vehicleOwnerName" | "driverName" | "driverMobile" | "unladenWeight" | "loadingWeight" | "materialWeightMT" | "materialWeightCFT" | "materialAmount" | "gstAmount" | "validityDateTime" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
 
   export type $InvoicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Invoice"
@@ -1358,7 +1358,7 @@ export namespace Prisma {
       unladenWeight: number
       loadingWeight: number
       materialWeightMT: number
-      materialWeightCMT: number
+      materialWeightCFT: number
       materialAmount: number
       gstAmount: number
       validityDateTime: string
@@ -1806,7 +1806,7 @@ export namespace Prisma {
     readonly unladenWeight: FieldRef<"Invoice", 'Float'>
     readonly loadingWeight: FieldRef<"Invoice", 'Float'>
     readonly materialWeightMT: FieldRef<"Invoice", 'Float'>
-    readonly materialWeightCMT: FieldRef<"Invoice", 'Float'>
+    readonly materialWeightCFT: FieldRef<"Invoice", 'Float'>
     readonly materialAmount: FieldRef<"Invoice", 'Float'>
     readonly gstAmount: FieldRef<"Invoice", 'Float'>
     readonly validityDateTime: FieldRef<"Invoice", 'String'>
@@ -2212,7 +2212,7 @@ export namespace Prisma {
     unladenWeight: 'unladenWeight',
     loadingWeight: 'loadingWeight',
     materialWeightMT: 'materialWeightMT',
-    materialWeightCMT: 'materialWeightCMT',
+    materialWeightCFT: 'materialWeightCFT',
     materialAmount: 'materialAmount',
     gstAmount: 'gstAmount',
     validityDateTime: 'validityDateTime',
@@ -2334,7 +2334,7 @@ export namespace Prisma {
     unladenWeight?: FloatFilter<"Invoice"> | number
     loadingWeight?: FloatFilter<"Invoice"> | number
     materialWeightMT?: FloatFilter<"Invoice"> | number
-    materialWeightCMT?: FloatFilter<"Invoice"> | number
+    materialWeightCFT?: FloatFilter<"Invoice"> | number
     materialAmount?: FloatFilter<"Invoice"> | number
     gstAmount?: FloatFilter<"Invoice"> | number
     validityDateTime?: StringFilter<"Invoice"> | string
@@ -2362,7 +2362,7 @@ export namespace Prisma {
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
     materialWeightMT?: SortOrder
-    materialWeightCMT?: SortOrder
+    materialWeightCFT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2393,7 +2393,7 @@ export namespace Prisma {
     unladenWeight?: FloatFilter<"Invoice"> | number
     loadingWeight?: FloatFilter<"Invoice"> | number
     materialWeightMT?: FloatFilter<"Invoice"> | number
-    materialWeightCMT?: FloatFilter<"Invoice"> | number
+    materialWeightCFT?: FloatFilter<"Invoice"> | number
     materialAmount?: FloatFilter<"Invoice"> | number
     gstAmount?: FloatFilter<"Invoice"> | number
     validityDateTime?: StringFilter<"Invoice"> | string
@@ -2421,7 +2421,7 @@ export namespace Prisma {
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
     materialWeightMT?: SortOrder
-    materialWeightCMT?: SortOrder
+    materialWeightCFT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2457,7 +2457,7 @@ export namespace Prisma {
     unladenWeight?: FloatWithAggregatesFilter<"Invoice"> | number
     loadingWeight?: FloatWithAggregatesFilter<"Invoice"> | number
     materialWeightMT?: FloatWithAggregatesFilter<"Invoice"> | number
-    materialWeightCMT?: FloatWithAggregatesFilter<"Invoice"> | number
+    materialWeightCFT?: FloatWithAggregatesFilter<"Invoice"> | number
     materialAmount?: FloatWithAggregatesFilter<"Invoice"> | number
     gstAmount?: FloatWithAggregatesFilter<"Invoice"> | number
     validityDateTime?: StringWithAggregatesFilter<"Invoice"> | string
@@ -2485,7 +2485,7 @@ export namespace Prisma {
     unladenWeight: number
     loadingWeight: number
     materialWeightMT: number
-    materialWeightCMT: number
+    materialWeightCFT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: string
@@ -2513,7 +2513,7 @@ export namespace Prisma {
     unladenWeight: number
     loadingWeight: number
     materialWeightMT: number
-    materialWeightCMT: number
+    materialWeightCFT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: string
@@ -2541,7 +2541,7 @@ export namespace Prisma {
     unladenWeight?: FloatFieldUpdateOperationsInput | number
     loadingWeight?: FloatFieldUpdateOperationsInput | number
     materialWeightMT?: FloatFieldUpdateOperationsInput | number
-    materialWeightCMT?: FloatFieldUpdateOperationsInput | number
+    materialWeightCFT?: FloatFieldUpdateOperationsInput | number
     materialAmount?: FloatFieldUpdateOperationsInput | number
     gstAmount?: FloatFieldUpdateOperationsInput | number
     validityDateTime?: StringFieldUpdateOperationsInput | string
@@ -2569,7 +2569,7 @@ export namespace Prisma {
     unladenWeight?: FloatFieldUpdateOperationsInput | number
     loadingWeight?: FloatFieldUpdateOperationsInput | number
     materialWeightMT?: FloatFieldUpdateOperationsInput | number
-    materialWeightCMT?: FloatFieldUpdateOperationsInput | number
+    materialWeightCFT?: FloatFieldUpdateOperationsInput | number
     materialAmount?: FloatFieldUpdateOperationsInput | number
     gstAmount?: FloatFieldUpdateOperationsInput | number
     validityDateTime?: StringFieldUpdateOperationsInput | string
@@ -2597,7 +2597,7 @@ export namespace Prisma {
     unladenWeight: number
     loadingWeight: number
     materialWeightMT: number
-    materialWeightCMT: number
+    materialWeightCFT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: string
@@ -2625,7 +2625,7 @@ export namespace Prisma {
     unladenWeight?: FloatFieldUpdateOperationsInput | number
     loadingWeight?: FloatFieldUpdateOperationsInput | number
     materialWeightMT?: FloatFieldUpdateOperationsInput | number
-    materialWeightCMT?: FloatFieldUpdateOperationsInput | number
+    materialWeightCFT?: FloatFieldUpdateOperationsInput | number
     materialAmount?: FloatFieldUpdateOperationsInput | number
     gstAmount?: FloatFieldUpdateOperationsInput | number
     validityDateTime?: StringFieldUpdateOperationsInput | string
@@ -2653,7 +2653,7 @@ export namespace Prisma {
     unladenWeight?: FloatFieldUpdateOperationsInput | number
     loadingWeight?: FloatFieldUpdateOperationsInput | number
     materialWeightMT?: FloatFieldUpdateOperationsInput | number
-    materialWeightCMT?: FloatFieldUpdateOperationsInput | number
+    materialWeightCFT?: FloatFieldUpdateOperationsInput | number
     materialAmount?: FloatFieldUpdateOperationsInput | number
     gstAmount?: FloatFieldUpdateOperationsInput | number
     validityDateTime?: StringFieldUpdateOperationsInput | string
@@ -2738,7 +2738,7 @@ export namespace Prisma {
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
     materialWeightMT?: SortOrder
-    materialWeightCMT?: SortOrder
+    materialWeightCFT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2750,7 +2750,7 @@ export namespace Prisma {
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
     materialWeightMT?: SortOrder
-    materialWeightCMT?: SortOrder
+    materialWeightCFT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
   }
@@ -2775,7 +2775,7 @@ export namespace Prisma {
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
     materialWeightMT?: SortOrder
-    materialWeightCMT?: SortOrder
+    materialWeightCFT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2803,7 +2803,7 @@ export namespace Prisma {
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
     materialWeightMT?: SortOrder
-    materialWeightCMT?: SortOrder
+    materialWeightCFT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2815,7 +2815,7 @@ export namespace Prisma {
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
     materialWeightMT?: SortOrder
-    materialWeightCMT?: SortOrder
+    materialWeightCFT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
   }

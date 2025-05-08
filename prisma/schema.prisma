@@ -34,7 +34,7 @@ model Invoice {
   unladenWeight       Float
   loadingWeight       Float
   materialWeightMT    Float
-  materialWeightCMT   Float
+  materialWeightCFT   Float
   materialAmount      Float
   gstAmount           Float
   validityDateTime    String
