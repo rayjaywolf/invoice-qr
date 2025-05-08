@@ -86,7 +86,7 @@ export default function InvoicePage() {
                         <h2 className="text-lg font-semibold mb-2">Weight Details</h2>
                         <p><span className="font-semibold">Unladen Weight:</span> {invoice.unladenWeight} MT</p>
                         <p><span className="font-semibold">Loading Weight:</span> {invoice.loadingWeight} MT</p>
-                        <p><span className="font-semibold">Material Weight:</span> {invoice.materialWeightMT}(MT) {invoice.materialWeightCMT}(CMT)</p>
+                        <p><span className="font-semibold">Material Weight:</span> {invoice.materialWeightMT}(MT) {invoice.materialWeightCFT}(CFT)</p>
                     </div>
                 </div>
 

@@ -19,6 +19,11 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import InvoicePreview from "./InvoicePreview";
 
+const generateSlipId = () => {
+    const randomNum = Math.floor(100000 + Math.random() * 900000); // Generates a random 6-digit number
+    return `STC-${randomNum}`;
+};
+
 const formSchema = z.object({
     slipId: z.string().min(1, { message: "Slip ID is required" }),
     orderDate: z.string().min(1, { message: "Order date is required" }),
@@ -38,7 +43,7 @@ const formSchema = z.object({
     unladenWeight: z.coerce.number(),
     loadingWeight: z.coerce.number(),
     materialWeightMT: z.coerce.number().min(0, { message: "Material weight in MT is required" }),
-    materialWeightCMT: z.coerce.number().min(0, { message: "Material weight in CMT is required" }),
+    materialWeightCFT: z.coerce.number().min(0, { message: "Material weight in CFT is required" }),
     materialAmount: z.coerce.number().min(1, { message: "Material amount is required" }),
     gstAmount: z.coerce.number(),
     validityDateTime: z.string().min(1, { message: "Validity date/time is required" }),
@@ -46,6 +51,7 @@ const formSchema = z.object({
 
 export default function InvoiceForm() {
     const [showPreview, setShowPreview] = useState(false);
+    const [previewData, setPreviewData] = useState<InvoiceData | null>(null);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -68,7 +74,7 @@ export default function InvoiceForm() {
             unladenWeight: 0,
             loadingWeight: 0,
             materialWeightMT: 0,
-            materialWeightCMT: 0,
+            materialWeightCFT: 0,
             materialAmount: 0,
             gstAmount: 0,
             validityDateTime: "",
@@ -76,6 +82,11 @@ export default function InvoiceForm() {
     });
 
     const handleSubmit = (values: z.infer<typeof formSchema>) => {
+        const invoiceData: InvoiceData = {
+            ...values,
+            consigneeGst: values.consigneeGst || "", // Ensure consigneeGst is always a string
+        };
+        setPreviewData(invoiceData);
         setShowPreview(true);
     };
 
@@ -98,18 +109,26 @@ export default function InvoiceForm() {
         form.setValue("unladenWeight", 0);
         form.setValue("loadingWeight", 0);
         form.setValue("materialWeightMT", 40);
-        form.setValue("materialWeightCMT", 1000);
+        form.setValue("materialWeightCFT", 1000);
         form.setValue("materialAmount", 17000);
         form.setValue("gstAmount", 850);
         form.setValue("validityDateTime", "15-11-2024 07:15PM");
     };
 
-    // Watch materialWeightMT for automatic CMT calculation
+    // Watch materialWeightMT for automatic calculations
     const materialWeightMT = form.watch("materialWeightMT");
     useEffect(() => {
-        // Calculate CMT: 250 CMT for every 10 MT
-        const calculatedCMT = (materialWeightMT / 10) * 250;
-        form.setValue("materialWeightCMT", Math.round(calculatedCMT));
+        // Calculate CFT: 250 CFT for every 10 MT
+        const calculatedCFT = (materialWeightMT / 10) * 250;
+        form.setValue("materialWeightCFT", Math.round(calculatedCFT));
+
+        // Calculate material amount: 1 MT = ₹425
+        const calculatedAmount = materialWeightMT * 425;
+        form.setValue("materialAmount", calculatedAmount);
+
+        // Calculate GST: 5% of material amount
+        const calculatedGST = calculatedAmount * 0.05;
+        form.setValue("gstAmount", Math.round(calculatedGST));
     }, [materialWeightMT, form]);
 
     return (
@@ -129,9 +148,18 @@ export default function InvoiceForm() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>No/Slip ID</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="STC-435826" {...field} />
-                                                </FormControl>
+                                                <div className="flex gap-2">
+                                                    <FormControl>
+                                                        <Input placeholder="STC-435826" {...field} />
+                                                    </FormControl>
+                                                    <Button 
+                                                        type="button" 
+                                                        variant="outline"
+                                                        onClick={() => form.setValue("slipId", generateSlipId())}
+                                                    >
+                                                        Generate
+                                                    </Button>
+                                                </div>
                                                 <FormMessage />
                                             </FormItem>
                                         )}
@@ -374,10 +402,10 @@ export default function InvoiceForm() {
                                                         {...field}
                                                         onChange={(e) => {
                                                             field.onChange(e);
-                                                            // Calculate CMT: 250 CMT for every 10 MT
+                                                            // Calculate CFT: 250 CFT for every 10 MT
                                                             const mt = parseFloat(e.target.value) || 0;
-                                                            const cmt = (mt / 10) * 250;
-                                                            form.setValue("materialWeightCMT", Math.round(cmt));
+                                                            const cft = (mt / 10) * 250;
+                                                            form.setValue("materialWeightCFT", Math.round(cft));
                                                         }}
                                                     />
                                                 </FormControl>
@@ -388,10 +416,10 @@ export default function InvoiceForm() {
 
                                     <FormField
                                         control={form.control}
-                                        name="materialWeightCMT"
+                                        name="materialWeightCFT"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Weight of material (CMT)</FormLabel>
+                                                <FormLabel>Weight of material (CFT)</FormLabel>
                                                 <FormControl>
                                                     <Input 
                                                         type="number" 
@@ -412,7 +440,12 @@ export default function InvoiceForm() {
                                             <FormItem>
                                                 <FormLabel>Amount of material</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" placeholder="17000" {...field} />
+                                                    <Input 
+                                                        type="number" 
+                                                        placeholder="17000" 
+                                                        {...field}
+                                                        readOnly
+                                                    />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -424,9 +457,14 @@ export default function InvoiceForm() {
                                         name="gstAmount"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>GST on material</FormLabel>
+                                                <FormLabel>GST on material (5%)</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" placeholder="850" {...field} />
+                                                    <Input 
+                                                        type="number" 
+                                                        placeholder="850" 
+                                                        {...field}
+                                                        readOnly
+                                                    />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -458,7 +496,7 @@ export default function InvoiceForm() {
                 </Card>
             ) : (
                 <div className="w-full max-w-4xl mx-auto">
-                    <InvoicePreview data={form.getValues()} onBack={() => setShowPreview(false)} />
+                    <InvoicePreview data={previewData!} onBack={() => setShowPreview(false)} />
                 </div>
             )}
         </div>

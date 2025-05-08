@@ -6,32 +6,10 @@ import { useRef, useState } from "react";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { QRCodeSVG } from "qrcode.react";
+import { InvoiceData } from "@/lib/types";
 
 type InvoicePreviewProps = {
-    data: {
-        slipId: string;
-        orderDate: string;
-        material: string;
-        crusherName: string;
-        crusherAddress: string;
-        crusherGst: string;
-        consigneeName: string;
-        consigneeCategory: string;
-        consigneeMobile: string;
-        consigneeGst: string;
-        destinationLocation: string;
-        vehicleNo: string;
-        vehicleOwnerName: string;
-        driverName: string;
-        driverMobile: string;
-        unladenWeight: number;
-        loadingWeight: number;
-        materialWeightMT: number;
-        materialWeightCMT: number;
-        materialAmount: number;
-        gstAmount: number;
-        validityDateTime: string;
-    };
+    data: InvoiceData;
     onBack: () => void;
 };
 
@@ -147,7 +125,7 @@ const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
                         <h2 className="text-lg font-semibold mb-2">Weight Details</h2>
                         <p><span className="font-semibold">Unladen Weight:</span> {data.unladenWeight} MT</p>
                         <p><span className="font-semibold">Loading Weight:</span> {data.loadingWeight} MT</p>
-                        <p><span className="font-semibold">Material Weight:</span> {data.materialWeightMT}(MT) {data.materialWeightCMT}(CMT)</p>
+                        <p><span className="font-semibold">Material Weight:</span> {data.materialWeightMT}(MT) {data.materialWeightCFT}(CFT)</p>
                     </div>
                 </div>
 

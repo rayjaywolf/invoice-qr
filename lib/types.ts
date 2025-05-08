@@ -17,7 +17,7 @@ export type InvoiceData = {
     unladenWeight: number;
     loadingWeight: number;
     materialWeightMT: number;
-    materialWeightCMT: number;
+    materialWeightCFT: number;
     materialAmount: number;
     gstAmount: number;
     validityDateTime: string;

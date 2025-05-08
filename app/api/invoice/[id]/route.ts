@@ -39,7 +39,7 @@ export async function POST(
                 unladenWeight: parseFloat(data.unladenWeight),
                 loadingWeight: parseFloat(data.loadingWeight),
                 materialWeightMT: parseFloat(data.materialWeightMT),
-                materialWeightCMT: parseFloat(data.materialWeightCMT),
+                materialWeightCFT: parseFloat(data.materialWeightCFT),
                 materialAmount: parseFloat(data.materialAmount),
                 gstAmount: parseFloat(data.gstAmount),
             },
@@ -49,7 +49,7 @@ export async function POST(
                 unladenWeight: parseFloat(data.unladenWeight),
                 loadingWeight: parseFloat(data.loadingWeight),
                 materialWeightMT: parseFloat(data.materialWeightMT),
-                materialWeightCMT: parseFloat(data.materialWeightCMT),
+                materialWeightCFT: parseFloat(data.materialWeightCFT),
                 materialAmount: parseFloat(data.materialAmount),
                 gstAmount: parseFloat(data.gstAmount),
             }
