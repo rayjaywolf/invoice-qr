@@ -43,14 +43,6 @@ export default function InvoicePage() {
                             <h2 className="text-xl font-semibold text-center mt-2">Form 'Q'</h2>
                             <h3 className="text-lg font-semibold text-center mt-1">Crusher Weighment Slip</h3>
                         </div>
-                        <a 
-                            href="https://minesandgeology.punjab.gov.i/stone/index.php?orders&task=detils&Cid=9&i" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-xs text-gray-500 hover:text-gray-700"
-                        >
-                            minesandgeology.punjab.gov.in
-                        </a>
                     </div>
                     <div className="flex justify-between mt-4">
                         <div>
