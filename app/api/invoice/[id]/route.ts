@@ -38,6 +38,8 @@ export async function POST(
                 ...data,
                 unladenWeight: parseFloat(data.unladenWeight),
                 loadingWeight: parseFloat(data.loadingWeight),
+                materialWeightMT: parseFloat(data.materialWeightMT),
+                materialWeightCMT: parseFloat(data.materialWeightCMT),
                 materialAmount: parseFloat(data.materialAmount),
                 gstAmount: parseFloat(data.gstAmount),
             },
@@ -46,6 +48,8 @@ export async function POST(
                 slipId: params.id,
                 unladenWeight: parseFloat(data.unladenWeight),
                 loadingWeight: parseFloat(data.loadingWeight),
+                materialWeightMT: parseFloat(data.materialWeightMT),
+                materialWeightCMT: parseFloat(data.materialWeightCMT),
                 materialAmount: parseFloat(data.materialAmount),
                 gstAmount: parseFloat(data.gstAmount),
             }

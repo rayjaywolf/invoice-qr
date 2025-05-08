@@ -33,7 +33,8 @@ model Invoice {
   driverMobile        String
   unladenWeight       Float
   loadingWeight       Float
-  materialWeight      String
+  materialWeightMT    Float
+  materialWeightCMT   Float
   materialAmount      Float
   gstAmount           Float
   validityDateTime    String

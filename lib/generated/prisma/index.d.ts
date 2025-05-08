@@ -884,6 +884,8 @@ export namespace Prisma {
   export type InvoiceAvgAggregateOutputType = {
     unladenWeight: number | null
     loadingWeight: number | null
+    materialWeightMT: number | null
+    materialWeightCMT: number | null
     materialAmount: number | null
     gstAmount: number | null
   }
@@ -891,6 +893,8 @@ export namespace Prisma {
   export type InvoiceSumAggregateOutputType = {
     unladenWeight: number | null
     loadingWeight: number | null
+    materialWeightMT: number | null
+    materialWeightCMT: number | null
     materialAmount: number | null
     gstAmount: number | null
   }
@@ -914,7 +918,8 @@ export namespace Prisma {
     driverMobile: string | null
     unladenWeight: number | null
     loadingWeight: number | null
-    materialWeight: string | null
+    materialWeightMT: number | null
+    materialWeightCMT: number | null
     materialAmount: number | null
     gstAmount: number | null
     validityDateTime: string | null
@@ -941,7 +946,8 @@ export namespace Prisma {
     driverMobile: string | null
     unladenWeight: number | null
     loadingWeight: number | null
-    materialWeight: string | null
+    materialWeightMT: number | null
+    materialWeightCMT: number | null
     materialAmount: number | null
     gstAmount: number | null
     validityDateTime: string | null
@@ -968,7 +974,8 @@ export namespace Prisma {
     driverMobile: number
     unladenWeight: number
     loadingWeight: number
-    materialWeight: number
+    materialWeightMT: number
+    materialWeightCMT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: number
@@ -981,6 +988,8 @@ export namespace Prisma {
   export type InvoiceAvgAggregateInputType = {
     unladenWeight?: true
     loadingWeight?: true
+    materialWeightMT?: true
+    materialWeightCMT?: true
     materialAmount?: true
     gstAmount?: true
   }
@@ -988,6 +997,8 @@ export namespace Prisma {
   export type InvoiceSumAggregateInputType = {
     unladenWeight?: true
     loadingWeight?: true
+    materialWeightMT?: true
+    materialWeightCMT?: true
     materialAmount?: true
     gstAmount?: true
   }
@@ -1011,7 +1022,8 @@ export namespace Prisma {
     driverMobile?: true
     unladenWeight?: true
     loadingWeight?: true
-    materialWeight?: true
+    materialWeightMT?: true
+    materialWeightCMT?: true
     materialAmount?: true
     gstAmount?: true
     validityDateTime?: true
@@ -1038,7 +1050,8 @@ export namespace Prisma {
     driverMobile?: true
     unladenWeight?: true
     loadingWeight?: true
-    materialWeight?: true
+    materialWeightMT?: true
+    materialWeightCMT?: true
     materialAmount?: true
     gstAmount?: true
     validityDateTime?: true
@@ -1065,7 +1078,8 @@ export namespace Prisma {
     driverMobile?: true
     unladenWeight?: true
     loadingWeight?: true
-    materialWeight?: true
+    materialWeightMT?: true
+    materialWeightCMT?: true
     materialAmount?: true
     gstAmount?: true
     validityDateTime?: true
@@ -1179,7 +1193,8 @@ export namespace Prisma {
     driverMobile: string
     unladenWeight: number
     loadingWeight: number
-    materialWeight: string
+    materialWeightMT: number
+    materialWeightCMT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: string
@@ -1225,7 +1240,8 @@ export namespace Prisma {
     driverMobile?: boolean
     unladenWeight?: boolean
     loadingWeight?: boolean
-    materialWeight?: boolean
+    materialWeightMT?: boolean
+    materialWeightCMT?: boolean
     materialAmount?: boolean
     gstAmount?: boolean
     validityDateTime?: boolean
@@ -1252,7 +1268,8 @@ export namespace Prisma {
     driverMobile?: boolean
     unladenWeight?: boolean
     loadingWeight?: boolean
-    materialWeight?: boolean
+    materialWeightMT?: boolean
+    materialWeightCMT?: boolean
     materialAmount?: boolean
     gstAmount?: boolean
     validityDateTime?: boolean
@@ -1279,7 +1296,8 @@ export namespace Prisma {
     driverMobile?: boolean
     unladenWeight?: boolean
     loadingWeight?: boolean
-    materialWeight?: boolean
+    materialWeightMT?: boolean
+    materialWeightCMT?: boolean
     materialAmount?: boolean
     gstAmount?: boolean
     validityDateTime?: boolean
@@ -1306,7 +1324,8 @@ export namespace Prisma {
     driverMobile?: boolean
     unladenWeight?: boolean
     loadingWeight?: boolean
-    materialWeight?: boolean
+    materialWeightMT?: boolean
+    materialWeightCMT?: boolean
     materialAmount?: boolean
     gstAmount?: boolean
     validityDateTime?: boolean
@@ -1314,7 +1333,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type InvoiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slipId" | "orderDate" | "material" | "crusherName" | "crusherAddress" | "crusherGst" | "consigneeName" | "consigneeCategory" | "consigneeMobile" | "consigneeGst" | "destinationLocation" | "vehicleNo" | "vehicleOwnerName" | "driverName" | "driverMobile" | "unladenWeight" | "loadingWeight" | "materialWeight" | "materialAmount" | "gstAmount" | "validityDateTime" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
+  export type InvoiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slipId" | "orderDate" | "material" | "crusherName" | "crusherAddress" | "crusherGst" | "consigneeName" | "consigneeCategory" | "consigneeMobile" | "consigneeGst" | "destinationLocation" | "vehicleNo" | "vehicleOwnerName" | "driverName" | "driverMobile" | "unladenWeight" | "loadingWeight" | "materialWeightMT" | "materialWeightCMT" | "materialAmount" | "gstAmount" | "validityDateTime" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
 
   export type $InvoicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Invoice"
@@ -1338,7 +1357,8 @@ export namespace Prisma {
       driverMobile: string
       unladenWeight: number
       loadingWeight: number
-      materialWeight: string
+      materialWeightMT: number
+      materialWeightCMT: number
       materialAmount: number
       gstAmount: number
       validityDateTime: string
@@ -1785,7 +1805,8 @@ export namespace Prisma {
     readonly driverMobile: FieldRef<"Invoice", 'String'>
     readonly unladenWeight: FieldRef<"Invoice", 'Float'>
     readonly loadingWeight: FieldRef<"Invoice", 'Float'>
-    readonly materialWeight: FieldRef<"Invoice", 'String'>
+    readonly materialWeightMT: FieldRef<"Invoice", 'Float'>
+    readonly materialWeightCMT: FieldRef<"Invoice", 'Float'>
     readonly materialAmount: FieldRef<"Invoice", 'Float'>
     readonly gstAmount: FieldRef<"Invoice", 'Float'>
     readonly validityDateTime: FieldRef<"Invoice", 'String'>
@@ -2190,7 +2211,8 @@ export namespace Prisma {
     driverMobile: 'driverMobile',
     unladenWeight: 'unladenWeight',
     loadingWeight: 'loadingWeight',
-    materialWeight: 'materialWeight',
+    materialWeightMT: 'materialWeightMT',
+    materialWeightCMT: 'materialWeightCMT',
     materialAmount: 'materialAmount',
     gstAmount: 'gstAmount',
     validityDateTime: 'validityDateTime',
@@ -2311,7 +2333,8 @@ export namespace Prisma {
     driverMobile?: StringFilter<"Invoice"> | string
     unladenWeight?: FloatFilter<"Invoice"> | number
     loadingWeight?: FloatFilter<"Invoice"> | number
-    materialWeight?: StringFilter<"Invoice"> | string
+    materialWeightMT?: FloatFilter<"Invoice"> | number
+    materialWeightCMT?: FloatFilter<"Invoice"> | number
     materialAmount?: FloatFilter<"Invoice"> | number
     gstAmount?: FloatFilter<"Invoice"> | number
     validityDateTime?: StringFilter<"Invoice"> | string
@@ -2338,7 +2361,8 @@ export namespace Prisma {
     driverMobile?: SortOrder
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
-    materialWeight?: SortOrder
+    materialWeightMT?: SortOrder
+    materialWeightCMT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2368,7 +2392,8 @@ export namespace Prisma {
     driverMobile?: StringFilter<"Invoice"> | string
     unladenWeight?: FloatFilter<"Invoice"> | number
     loadingWeight?: FloatFilter<"Invoice"> | number
-    materialWeight?: StringFilter<"Invoice"> | string
+    materialWeightMT?: FloatFilter<"Invoice"> | number
+    materialWeightCMT?: FloatFilter<"Invoice"> | number
     materialAmount?: FloatFilter<"Invoice"> | number
     gstAmount?: FloatFilter<"Invoice"> | number
     validityDateTime?: StringFilter<"Invoice"> | string
@@ -2395,7 +2420,8 @@ export namespace Prisma {
     driverMobile?: SortOrder
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
-    materialWeight?: SortOrder
+    materialWeightMT?: SortOrder
+    materialWeightCMT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2430,7 +2456,8 @@ export namespace Prisma {
     driverMobile?: StringWithAggregatesFilter<"Invoice"> | string
     unladenWeight?: FloatWithAggregatesFilter<"Invoice"> | number
     loadingWeight?: FloatWithAggregatesFilter<"Invoice"> | number
-    materialWeight?: StringWithAggregatesFilter<"Invoice"> | string
+    materialWeightMT?: FloatWithAggregatesFilter<"Invoice"> | number
+    materialWeightCMT?: FloatWithAggregatesFilter<"Invoice"> | number
     materialAmount?: FloatWithAggregatesFilter<"Invoice"> | number
     gstAmount?: FloatWithAggregatesFilter<"Invoice"> | number
     validityDateTime?: StringWithAggregatesFilter<"Invoice"> | string
@@ -2457,7 +2484,8 @@ export namespace Prisma {
     driverMobile: string
     unladenWeight: number
     loadingWeight: number
-    materialWeight: string
+    materialWeightMT: number
+    materialWeightCMT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: string
@@ -2484,7 +2512,8 @@ export namespace Prisma {
     driverMobile: string
     unladenWeight: number
     loadingWeight: number
-    materialWeight: string
+    materialWeightMT: number
+    materialWeightCMT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: string
@@ -2511,7 +2540,8 @@ export namespace Prisma {
     driverMobile?: StringFieldUpdateOperationsInput | string
     unladenWeight?: FloatFieldUpdateOperationsInput | number
     loadingWeight?: FloatFieldUpdateOperationsInput | number
-    materialWeight?: StringFieldUpdateOperationsInput | string
+    materialWeightMT?: FloatFieldUpdateOperationsInput | number
+    materialWeightCMT?: FloatFieldUpdateOperationsInput | number
     materialAmount?: FloatFieldUpdateOperationsInput | number
     gstAmount?: FloatFieldUpdateOperationsInput | number
     validityDateTime?: StringFieldUpdateOperationsInput | string
@@ -2538,7 +2568,8 @@ export namespace Prisma {
     driverMobile?: StringFieldUpdateOperationsInput | string
     unladenWeight?: FloatFieldUpdateOperationsInput | number
     loadingWeight?: FloatFieldUpdateOperationsInput | number
-    materialWeight?: StringFieldUpdateOperationsInput | string
+    materialWeightMT?: FloatFieldUpdateOperationsInput | number
+    materialWeightCMT?: FloatFieldUpdateOperationsInput | number
     materialAmount?: FloatFieldUpdateOperationsInput | number
     gstAmount?: FloatFieldUpdateOperationsInput | number
     validityDateTime?: StringFieldUpdateOperationsInput | string
@@ -2565,7 +2596,8 @@ export namespace Prisma {
     driverMobile: string
     unladenWeight: number
     loadingWeight: number
-    materialWeight: string
+    materialWeightMT: number
+    materialWeightCMT: number
     materialAmount: number
     gstAmount: number
     validityDateTime: string
@@ -2592,7 +2624,8 @@ export namespace Prisma {
     driverMobile?: StringFieldUpdateOperationsInput | string
     unladenWeight?: FloatFieldUpdateOperationsInput | number
     loadingWeight?: FloatFieldUpdateOperationsInput | number
-    materialWeight?: StringFieldUpdateOperationsInput | string
+    materialWeightMT?: FloatFieldUpdateOperationsInput | number
+    materialWeightCMT?: FloatFieldUpdateOperationsInput | number
     materialAmount?: FloatFieldUpdateOperationsInput | number
     gstAmount?: FloatFieldUpdateOperationsInput | number
     validityDateTime?: StringFieldUpdateOperationsInput | string
@@ -2619,7 +2652,8 @@ export namespace Prisma {
     driverMobile?: StringFieldUpdateOperationsInput | string
     unladenWeight?: FloatFieldUpdateOperationsInput | number
     loadingWeight?: FloatFieldUpdateOperationsInput | number
-    materialWeight?: StringFieldUpdateOperationsInput | string
+    materialWeightMT?: FloatFieldUpdateOperationsInput | number
+    materialWeightCMT?: FloatFieldUpdateOperationsInput | number
     materialAmount?: FloatFieldUpdateOperationsInput | number
     gstAmount?: FloatFieldUpdateOperationsInput | number
     validityDateTime?: StringFieldUpdateOperationsInput | string
@@ -2703,7 +2737,8 @@ export namespace Prisma {
     driverMobile?: SortOrder
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
-    materialWeight?: SortOrder
+    materialWeightMT?: SortOrder
+    materialWeightCMT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2714,6 +2749,8 @@ export namespace Prisma {
   export type InvoiceAvgOrderByAggregateInput = {
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
+    materialWeightMT?: SortOrder
+    materialWeightCMT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
   }
@@ -2737,7 +2774,8 @@ export namespace Prisma {
     driverMobile?: SortOrder
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
-    materialWeight?: SortOrder
+    materialWeightMT?: SortOrder
+    materialWeightCMT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2764,7 +2802,8 @@ export namespace Prisma {
     driverMobile?: SortOrder
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
-    materialWeight?: SortOrder
+    materialWeightMT?: SortOrder
+    materialWeightCMT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
     validityDateTime?: SortOrder
@@ -2775,6 +2814,8 @@ export namespace Prisma {
   export type InvoiceSumOrderByAggregateInput = {
     unladenWeight?: SortOrder
     loadingWeight?: SortOrder
+    materialWeightMT?: SortOrder
+    materialWeightCMT?: SortOrder
     materialAmount?: SortOrder
     gstAmount?: SortOrder
   }

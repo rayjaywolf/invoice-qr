@@ -26,7 +26,8 @@ type InvoicePreviewProps = {
         driverMobile: string;
         unladenWeight: number;
         loadingWeight: number;
-        materialWeight: string;
+        materialWeightMT: number;
+        materialWeightCMT: number;
         materialAmount: number;
         gstAmount: number;
         validityDateTime: string;
@@ -88,8 +89,22 @@ const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
             </div>
 
             <Card className="p-8 bg-white" ref={invoiceRef}>
-                <div className="border-b-2 border-black pb-4 mb-6">
-                    <h1 className="text-2xl font-bold text-center">INVOICE</h1>
+                <div className="border-b-2 border-black pb-4 mb-6 relative">
+                    <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                            <h1 className="text-2xl font-bold text-center">INVOICE</h1>
+                            <h2 className="text-xl font-semibold text-center mt-2">Form 'Q'</h2>
+                            <h3 className="text-lg font-semibold text-center mt-1">Crusher Weighment Slip</h3>
+                        </div>
+                        <a 
+                            href="https://minesandgeology.punjab.gov.i/stone/index.php?orders&task=detils&Cid=9&i" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-xs text-gray-500 hover:text-gray-700 absolute right-0"
+                        >
+                            minesandgeology.punjab.gov.in
+                        </a>
+                    </div>
                     <div className="flex justify-between mt-4">
                         <div>
                             <p><span className="font-semibold">No/Slip ID:</span> {data.slipId}</p>
@@ -132,7 +147,7 @@ const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
                         <h2 className="text-lg font-semibold mb-2">Weight Details</h2>
                         <p><span className="font-semibold">Unladen Weight:</span> {data.unladenWeight} MT</p>
                         <p><span className="font-semibold">Loading Weight:</span> {data.loadingWeight} MT</p>
-                        <p><span className="font-semibold">Material Weight:</span> {data.materialWeight}</p>
+                        <p><span className="font-semibold">Material Weight:</span> {data.materialWeightMT}(MT) {data.materialWeightCMT}(CMT)</p>
                     </div>
                 </div>
 

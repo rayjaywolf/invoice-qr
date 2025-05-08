@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -37,7 +37,8 @@ const formSchema = z.object({
     driverMobile: z.string().min(10, { message: "Valid driver mobile is required" }),
     unladenWeight: z.coerce.number(),
     loadingWeight: z.coerce.number(),
-    materialWeight: z.string().min(1, { message: "Material weight is required" }),
+    materialWeightMT: z.coerce.number().min(0, { message: "Material weight in MT is required" }),
+    materialWeightCMT: z.coerce.number().min(0, { message: "Material weight in CMT is required" }),
     materialAmount: z.coerce.number().min(1, { message: "Material amount is required" }),
     gstAmount: z.coerce.number(),
     validityDateTime: z.string().min(1, { message: "Validity date/time is required" }),
@@ -66,7 +67,8 @@ export default function InvoiceForm() {
             driverMobile: "",
             unladenWeight: 0,
             loadingWeight: 0,
-            materialWeight: "",
+            materialWeightMT: 0,
+            materialWeightCMT: 0,
             materialAmount: 0,
             gstAmount: 0,
             validityDateTime: "",
@@ -95,11 +97,20 @@ export default function InvoiceForm() {
         form.setValue("driverMobile", "7814508731");
         form.setValue("unladenWeight", 0);
         form.setValue("loadingWeight", 0);
-        form.setValue("materialWeight", "40(MT) 1000(CFT)");
+        form.setValue("materialWeightMT", 40);
+        form.setValue("materialWeightCMT", 1000);
         form.setValue("materialAmount", 17000);
         form.setValue("gstAmount", 850);
         form.setValue("validityDateTime", "15-11-2024 07:15PM");
     };
+
+    // Watch materialWeightMT for automatic CMT calculation
+    const materialWeightMT = form.watch("materialWeightMT");
+    useEffect(() => {
+        // Calculate CMT: 250 CMT for every 10 MT
+        const calculatedCMT = (materialWeightMT / 10) * 250;
+        form.setValue("materialWeightCMT", Math.round(calculatedCMT));
+    }, [materialWeightMT, form]);
 
     return (
         <div className="container mx-auto py-10">
@@ -352,12 +363,42 @@ export default function InvoiceForm() {
 
                                     <FormField
                                         control={form.control}
-                                        name="materialWeight"
+                                        name="materialWeightMT"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Weight of material(MT)</FormLabel>
+                                                <FormLabel>Weight of material (MT)</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="40(MT) 1000(CFT)" {...field} />
+                                                    <Input 
+                                                        type="number" 
+                                                        placeholder="40" 
+                                                        {...field}
+                                                        onChange={(e) => {
+                                                            field.onChange(e);
+                                                            // Calculate CMT: 250 CMT for every 10 MT
+                                                            const mt = parseFloat(e.target.value) || 0;
+                                                            const cmt = (mt / 10) * 250;
+                                                            form.setValue("materialWeightCMT", Math.round(cmt));
+                                                        }}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="materialWeightCMT"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Weight of material (CMT)</FormLabel>
+                                                <FormControl>
+                                                    <Input 
+                                                        type="number" 
+                                                        placeholder="1000" 
+                                                        {...field}
+                                                        readOnly
+                                                    />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>

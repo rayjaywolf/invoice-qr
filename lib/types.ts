@@ -16,7 +16,8 @@ export type InvoiceData = {
     driverMobile: string;
     unladenWeight: number;
     loadingWeight: number;
-    materialWeight: string;
+    materialWeightMT: number;
+    materialWeightCMT: number;
     materialAmount: number;
     gstAmount: number;
     validityDateTime: string;
