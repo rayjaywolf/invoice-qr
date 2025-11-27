@@ -38,7 +38,7 @@ const testDataSets = [
   {
     slipId: "STC-435826",
     consigneeMobile: "9888606315",
-    vehicleNo: "HR-688-2045",
+    vehicleNo: "HR-68B-2045",
     vehicleOwnerName: "PARDEEP",
     driverName: "SINGU",
     driverMobile: "7814508731",
@@ -46,7 +46,7 @@ const testDataSets = [
   {
     slipId: "STC-435841",
     consigneeMobile: "6204267310",
-    vehicleNo: "HR-688-8946",
+    vehicleNo: "HR-68B-8946",
     vehicleOwnerName: "BALAJI",
     driverName: "ALI",
     driverMobile: "9041489053",
@@ -78,7 +78,7 @@ const testDataSets = [
   {
     slipId: "STC-435906",
     consigneeMobile: "9216108731",
-    vehicleNo: "HR-688-9077",
+    vehicleNo: "HR-68B-9077",
     vehicleOwnerName: "MANIK",
     driverName: "GANESH",
     driverMobile: "9915217382",
@@ -86,7 +86,7 @@ const testDataSets = [
   {
     slipId: "STC-435922",
     consigneeMobile: "9991441739",
-    vehicleNo: "HR-688-3988",
+    vehicleNo: "HR-68B-3988",
     vehicleOwnerName: "MANIK",
     driverName: "PANKAJ",
     driverMobile: "7084169168",
@@ -94,7 +94,7 @@ const testDataSets = [
   {
     slipId: "STC-435937",
     consigneeMobile: "7402951284",
-    vehicleNo: "HR-688-8485",
+    vehicleNo: "HR-68B-8485",
     vehicleOwnerName: "SANT RAM",
     driverName: "RAJESH",
     driverMobile: "7607317387",
