@@ -1,12 +1,11 @@
 import 'dotenv/config'
-import { defineConfig, env } from 'prisma/config'
 
-export default defineConfig({
+export default {
   datasource: {
-    url: env('DATABASE_URL'),
+    url: process.env.DATABASE_URL,
     // Only include shadowDatabaseUrl if provided
     ...(process.env.SHADOW_DATABASE_URL
       ? { shadowDatabaseUrl: process.env.SHADOW_DATABASE_URL }
       : {}),
   },
-})
+}
