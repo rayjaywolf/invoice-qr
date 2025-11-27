@@ -199,7 +199,7 @@ export default function InvoiceForm() {
 
     // Set the randomly selected data
     form.setValue("slipId", newSlipId);
-    form.setValue("consigneeMobile", randomSet.consigneeMobile);
+    form.setValue("consigneeMobile", "9857223914");
     form.setValue("vehicleNo", randomSet.vehicleNo);
     form.setValue("vehicleOwnerName", randomSet.vehicleOwnerName);
     form.setValue("driverName", randomSet.driverName);
@@ -211,10 +211,10 @@ export default function InvoiceForm() {
     form.setValue("crusherName", "GUPTA & COMPANY STONE CRUSHER");
     form.setValue("crusherAddress", "MUBARIKPUR, DERABASSI");
     form.setValue("crusherGst", "03AASFG9090N1ZN");
-    form.setValue("consigneeName", "DEEPAK CHAUHAN");
+    form.setValue("consigneeName", "Devesh Thakur");
     form.setValue("consigneeCategory", "Stocklist");
-    form.setValue("consigneeGst", "02AOMPC1829D1ZJ");
-    form.setValue("destinationLocation", "CHHOTA SHIMLA HP");
+    form.setValue("consigneeGst", "02AXFPT9050R1ZT");
+    form.setValue("destinationLocation", "CHHOTA SHIMLA");
     form.setValue("unladenWeight", 0);
     form.setValue("loadingWeight", 0);
     form.setValue("materialWeightMT", 40);
