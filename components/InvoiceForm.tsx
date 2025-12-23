@@ -8,6 +8,7 @@ import { InvoiceData } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -147,6 +148,8 @@ const formSchema = z.object({
 export default function InvoiceForm() {
   const [showPreview, setShowPreview] = useState(false);
   const [previewData, setPreviewData] = useState<InvoiceData | null>(null);
+  const [jsonInput, setJsonInput] = useState("");
+  const [jsonError, setJsonError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -175,6 +178,48 @@ export default function InvoiceForm() {
       validityDateTime: "",
     },
   });
+
+  const applyJsonToForm = () => {
+    if (!jsonInput.trim()) {
+      setJsonError("Please paste JSON data first.");
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(jsonInput);
+
+      const numericKeys: Array<keyof z.infer<typeof formSchema>> = [
+        "unladenWeight",
+        "loadingWeight",
+        "materialWeightMT",
+        "materialWeightCFT",
+        "materialAmount",
+        "gstAmount",
+      ];
+
+      const currentValues = form.getValues();
+      const nextValues: z.infer<typeof formSchema> = { ...currentValues };
+
+      (
+        Object.keys(formSchema.shape) as Array<keyof z.infer<typeof formSchema>>
+      ).forEach((key) => {
+        if (parsed[key] !== undefined) {
+          const value = parsed[key];
+          if (numericKeys.includes(key)) {
+            // Coerce numeric fields
+            nextValues[key] = Number(value) as any;
+          } else {
+            nextValues[key] = value as any;
+          }
+        }
+      });
+
+      form.reset(nextValues);
+      setJsonError(null);
+    } catch (error) {
+      setJsonError("Invalid JSON. Please check the format.");
+    }
+  };
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     const invoiceData: InvoiceData = {
@@ -610,6 +655,53 @@ export default function InvoiceForm() {
                       </FormItem>
                     )}
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="jsonInput">Paste JSON to fill form</Label>
+                  <Textarea
+                    id="jsonInput"
+                    value={jsonInput}
+                    onChange={(e) => setJsonInput(e.target.value)}
+                    placeholder='{
+  "slipId": "STC-435826",
+  "orderDate": "15-11-2024 07:14AM",
+  "material": "STONE",
+  "crusherName": "GUPTA & COMPANY STONE CRUSHER",
+  "crusherAddress": "MUBARIKPUR, DERABASSI",
+  "crusherGst": "03AASFG9090N1ZN",
+  "consigneeName": "Devesh Thakur",
+  "consigneeCategory": "Stocklist",
+  "consigneeMobile": "9888606315",
+  "consigneeGst": "02AXFPT9050R1ZT",
+  "destinationLocation": "CHHOTA SHIMLA",
+  "vehicleNo": "HR-68B-2045",
+  "vehicleOwnerName": "PARDEEP",
+  "driverName": "SINGU",
+  "driverMobile": "7814508731",
+  "unladenWeight": 0,
+  "loadingWeight": 0,
+  "materialWeightMT": 40,
+  "materialWeightCFT": 1000,
+  "materialAmount": 17000,
+  "gstAmount": 850,
+  "validityDateTime": "15-11-2024 07:15PM"
+}'
+                    className="min-h-[160px] font-mono text-sm"
+                  />
+                  {jsonError && (
+                    <p className="text-sm text-red-500">{jsonError}</p>
+                  )}
+                  <div className="flex justify-end">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={applyJsonToForm}
+                    >
+                      Apply JSON to form
+                    </Button>
+                  </div>
                 </div>
 
                 <div className="flex gap-4">
