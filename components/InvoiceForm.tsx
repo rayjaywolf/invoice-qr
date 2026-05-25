@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { InvoiceData } from "@/lib/types";
+import { downloadInvoices } from "@/lib/invoiceActions";
+import { invoiceSchema, parseInvoicesFromJson } from "@/lib/parseInvoiceJson";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -102,54 +104,15 @@ const testDataSets = [
   },
 ];
 
-const formSchema = z.object({
-  slipId: z.string().min(1, { message: "Slip ID is required" }),
-  orderDate: z.string().min(1, { message: "Order date is required" }),
-  material: z.string().min(1, { message: "Material is required" }),
-  crusherName: z.string().min(1, { message: "Crusher name is required" }),
-  crusherAddress: z.string().min(1, { message: "Crusher address is required" }),
-  crusherGst: z.string().min(1, { message: "Crusher GST number is required" }),
-  consigneeName: z.string().min(1, { message: "Consignee name is required" }),
-  consigneeCategory: z
-    .string()
-    .min(1, { message: "Consignee category is required" }),
-  consigneeMobile: z
-    .string()
-    .min(10, { message: "Valid mobile number is required" }),
-  consigneeGst: z.string().optional(),
-  destinationLocation: z
-    .string()
-    .min(1, { message: "Destination is required" }),
-  vehicleNo: z.string().min(1, { message: "Vehicle number is required" }),
-  vehicleOwnerName: z
-    .string()
-    .min(1, { message: "Vehicle owner name is required" }),
-  driverName: z.string().min(1, { message: "Driver name is required" }),
-  driverMobile: z
-    .string()
-    .min(10, { message: "Valid driver mobile is required" }),
-  unladenWeight: z.coerce.number(),
-  loadingWeight: z.coerce.number(),
-  materialWeightMT: z.coerce
-    .number()
-    .min(0, { message: "Material weight in MT is required" }),
-  materialWeightCFT: z.coerce
-    .number()
-    .min(0, { message: "Material weight in CFT is required" }),
-  materialAmount: z.coerce
-    .number()
-    .min(1, { message: "Material amount is required" }),
-  gstAmount: z.coerce.number(),
-  validityDateTime: z
-    .string()
-    .min(1, { message: "Validity date/time is required" }),
-});
+const formSchema = invoiceSchema;
 
 export default function InvoiceForm() {
   const [showPreview, setShowPreview] = useState(false);
   const [previewData, setPreviewData] = useState<InvoiceData | null>(null);
   const [jsonInput, setJsonInput] = useState("");
   const [jsonError, setJsonError] = useState<string | null>(null);
+  const [isBulkDownloading, setIsBulkDownloading] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -187,37 +150,50 @@ export default function InvoiceForm() {
 
     try {
       const parsed = JSON.parse(jsonInput);
+      if (Array.isArray(parsed)) {
+        setJsonError(
+          `Array with ${parsed.length} invoices detected. Use "Download PDF(s)" for bulk, or paste a single object to fill the form.`
+        );
+        return;
+      }
 
-      const numericKeys: Array<keyof z.infer<typeof formSchema>> = [
-        "unladenWeight",
-        "loadingWeight",
-        "materialWeightMT",
-        "materialWeightCFT",
-        "materialAmount",
-        "gstAmount",
-      ];
-
-      const currentValues = form.getValues();
-      const nextValues: z.infer<typeof formSchema> = { ...currentValues };
-
-      (
-        Object.keys(formSchema.shape) as Array<keyof z.infer<typeof formSchema>>
-      ).forEach((key) => {
-        if (parsed[key] !== undefined) {
-          const value = parsed[key];
-          if (numericKeys.includes(key)) {
-            // Coerce numeric fields
-            nextValues[key] = Number(value) as any;
-          } else {
-            nextValues[key] = value as any;
-          }
-        }
-      });
-
-      form.reset(nextValues);
+      const invoices = parseInvoicesFromJson(jsonInput);
+      form.reset(invoices[0]);
       setJsonError(null);
     } catch (error) {
-      setJsonError("Invalid JSON. Please check the format.");
+      setJsonError(
+        error instanceof Error ? error.message : "Invalid JSON. Please check the format."
+      );
+    }
+  };
+
+  const handleBulkDownload = async () => {
+    if (!jsonInput.trim()) {
+      setJsonError("Please paste JSON data first.");
+      return;
+    }
+
+    setIsBulkDownloading(true);
+    setBulkProgress(null);
+    setJsonError(null);
+
+    try {
+      const invoices = parseInvoicesFromJson(jsonInput);
+      await downloadInvoices(invoices, window.location.origin, (current, total) => {
+        setBulkProgress(`Downloading ${current} of ${total}...`);
+      });
+      setBulkProgress(
+        invoices.length === 1
+          ? "Downloaded 1 invoice."
+          : `Downloaded ${invoices.length} invoices.`
+      );
+    } catch (error) {
+      setJsonError(
+        error instanceof Error ? error.message : "Failed to download invoices."
+      );
+      setBulkProgress(null);
+    } finally {
+      setIsBulkDownloading(false);
     }
   };
 
@@ -658,12 +634,29 @@ export default function InvoiceForm() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="jsonInput">Paste JSON to fill form</Label>
+                  <Label htmlFor="jsonInput">
+                    Paste JSON (single object or array of invoices)
+                  </Label>
                   <Textarea
                     id="jsonInput"
                     value={jsonInput}
-                    onChange={(e) => setJsonInput(e.target.value)}
-                    placeholder='{
+                    onChange={(e) => {
+                      setJsonInput(e.target.value);
+                      setJsonError(null);
+                      setBulkProgress(null);
+                    }}
+                    placeholder={`[
+  {
+    "slipId": "STC-435827",
+    "orderDate": "30-04-2026 08:00AM",
+    "material": "Sand",
+    ...
+  }
+]
+
+Or a single object:
+
+{
   "slipId": "STC-435826",
   "orderDate": "15-11-2024 07:14AM",
   "material": "STONE",
@@ -686,20 +679,32 @@ export default function InvoiceForm() {
   "materialAmount": 17000,
   "gstAmount": 850,
   "validityDateTime": "15-11-2024 07:15PM"
-}'
-                    className="min-h-[160px] font-mono text-sm"
+}`}
+                    className="min-h-[200px] font-mono text-sm"
                   />
                   {jsonError && (
                     <p className="text-sm text-red-500">{jsonError}</p>
                   )}
-                  <div className="flex justify-end">
+                  {bulkProgress && (
+                    <p className="text-sm text-green-600">{bulkProgress}</p>
+                  )}
+                  <div className="flex flex-wrap justify-end gap-2">
                     <Button
                       type="button"
                       variant="outline"
                       size="sm"
                       onClick={applyJsonToForm}
+                      disabled={isBulkDownloading}
                     >
                       Apply JSON to form
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      onClick={handleBulkDownload}
+                      disabled={isBulkDownloading}
+                    >
+                      {isBulkDownloading ? "Downloading..." : "Download PDF(s)"}
                     </Button>
                   </div>
                 </div>

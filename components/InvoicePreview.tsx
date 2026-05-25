@@ -2,11 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useRef, useState } from "react";
-import html2canvas from "html2canvas-pro";
-import jsPDF from "jspdf";
+import { useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { InvoiceData } from "@/lib/types";
+import { downloadInvoicePdf, saveInvoice } from "@/lib/invoiceActions";
 
 type InvoicePreviewProps = {
     data: InvoiceData;
@@ -14,39 +13,14 @@ type InvoicePreviewProps = {
 };
 
 const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
-    const invoiceRef = useRef<HTMLDivElement>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleDownload = async () => {
-        if (!invoiceRef.current) return;
         setIsLoading(true);
 
         try {
-            // Save invoice data to API
-            const response = await fetch(`/api/invoice/${data.slipId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.text();
-                throw new Error(`Failed to save invoice data: ${errorData}`);
-            }
-
-            // Generate PDF
-            const canvas = await html2canvas(invoiceRef.current);
-            const imgData = canvas.toDataURL("image/png");
-            const pdf = new jsPDF({
-                orientation: "portrait",
-                unit: "px",
-                format: [canvas.width, canvas.height]
-            });
-
-            pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-            pdf.save(`Invoice-${data.slipId}.pdf`);
+            await saveInvoice(data);
+            await downloadInvoicePdf(data, window.location.origin);
         } catch (error) {
             console.error('Error generating invoice:', error);
             alert(error instanceof Error ? error.message : 'Failed to generate invoice');
@@ -68,7 +42,7 @@ const InvoicePreview = ({ data, onBack }: InvoicePreviewProps) => {
                 </Button>
             </div>
 
-            <Card className="p-8 bg-white" ref={invoiceRef}>
+            <Card className="p-8 bg-white">
                 <div className="border-b-2 border-black pb-4 mb-6 relative">
                     <div className="flex justify-between items-start">
                         <div className="flex-1">
